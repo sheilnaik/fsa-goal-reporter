@@ -43,12 +43,14 @@ document.getElementById('generate').addEventListener('click', () => {
   const time = document.getElementById('time').value;
   const details = document.getElementById('details').value;
   const location = selectedIndex !== null ? locationNames[selectedIndex] : '';
+  const buildUp = [...document.querySelectorAll('.playOption:checked')].map(o => o.value);
 
   let message = `🚨 FSA Goal! 🚨\n`;
   message += `⚽️ Scorer: ${scorer}\n`;
   message += `🅰️ Assisted By: ${assist || 'None'}\n`;
   if (time) message += `🕒 Time of Goal: ${time}‘\n`;
   if (location) message += `📍 Goal Location: ${location}\n`;
+  if (buildUp.length) message += `🔄 Build-Up: ${buildUp.join(', ')}\n`;
   if (details) message += `📝 Details: ${details}`;
 
   output.value = message.trim();
