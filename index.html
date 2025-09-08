@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FSA Goal Reporter</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>FSA Goal Reporter</h1>
+    <form id="goalForm">
+      <label>
+        Scorer
+        <select id="scorer"></select>
+      </label>
+      <label>
+        Assisted By
+        <select id="assist">
+          <option value="">None</option>
+        </select>
+      </label>
+      <label>
+        Time of Goal
+        <input type="number" id="time" min="0" placeholder="Minute" />
+      </label>
+      <label>
+        Details
+        <textarea id="details" rows="2" placeholder="Details..."></textarea>
+      </label>
+      <div class="goal-container">
+        <p>Select Goal Location:</p>
+        <div id="goalGrid" class="goal-grid"></div>
+      </div>
+      <button type="button" id="generate">Generate Message</button>
+    </form>
+    <textarea id="output" readonly></textarea>
+    <div id="copyNotice" class="copy-notice"></div>
+  </main>
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
+</html>
