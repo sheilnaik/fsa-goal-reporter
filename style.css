@@ -89,3 +89,22 @@ button:active {
   color: #2196f3;
   min-height: 1.2rem;
 }
+
+#playOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+#playOptions legend {
+  padding: 0 0.3rem;
+}
+
+#playOptions label {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+}
