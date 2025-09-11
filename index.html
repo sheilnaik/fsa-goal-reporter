@@ -1,60 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FSA Goal Reporter</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <main>
-    <h1>FSA Goal Reporter</h1>
-    <form id="goalForm">
-      <label>
-        Scorer
-        <select id="scorer"></select>
-      </label>
-      <label>
-        Assisted By
-        <select id="assist">
-          <option value="">None</option>
-        </select>
-      </label>
-      <label>
-        Time of Goal
-        <input type="number" id="time" min="0" placeholder="Minute" />
-      </label>
-      <fieldset id="playOptions">
-        <legend>Play Build-Up</legend>
-        <label><input type="checkbox" class="playOption" value="Breakaway" /> Breakaway</label>
-        <label><input type="checkbox" class="playOption" value="Rebound" /> Rebound</label>
-        <label><input type="checkbox" class="playOption" value="Throw-In" /> Throw-In</label>
-        <label><input type="checkbox" class="playOption" value="Through Pass" /> Through Pass</label>
-        <label><input type="checkbox" class="playOption" value="Counterattack" /> Counterattack</label>
-        <label><input type="checkbox" class="playOption" value="Corner Kick" /> Corner Kick</label>
-        <label><input type="checkbox" class="playOption" value="Free Kick" /> Free Kick</label>
-        <label><input type="checkbox" class="playOption" value="Penalty" /> Penalty</label>
-        <label><input type="checkbox" class="playOption" value="Cross" /> Cross</label>
-      </fieldset>
-      <label>
-        Details
-        <textarea id="details" rows="2" placeholder="Details..."></textarea>
-      </label>
-      <div class="goal-container">
-        <p>Select Goal Location:</p>
-        <div id="goalGrid" class="goal-grid"></div>
-      </div>
-      <button type="button" id="generate">Generate Message</button>
-    </form>
-    <textarea id="output" readonly></textarea>
-    <div id="copyNotice" class="copy-notice"></div>
-  </main>
-  <script src="app.js"></script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js");
-    }
-  </script>
-</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FSA Goal Reporter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="badge">FSA</div>
+      <h1>Goal Reporter</h1>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Goal Details</h2>
+        <div class="field">
+          <label for="scorer">Scorer</label>
+          <select id="scorer" aria-label="Select goal scorer"></select>
+        </div>
+
+        <div class="field">
+          <label for="assist">Assist (optional)</label>
+          <select id="assist" aria-label="Select assistant (optional)"></select>
+        </div>
+
+        <div class="field">
+          <label for="minute">Minute</label>
+          <select id="minute" aria-label="Select minute of goal"></select>
+          <div class="hint">Picker shows 0 – 50 minutes. Snippet adds '</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Where in the Goal?</h2>
+        <div class="goal-wrapper">
+          <div class="goal" aria-label="Goal diagram with nine zones">
+            <!-- 3x3 overlay buttons -->
+            <button class="zone" data-zone="top-left" aria-label="Top left"></button>
+            <button class="zone" data-zone="top-center" aria-label="Top center"></button>
+            <button class="zone" data-zone="top-right" aria-label="Top right"></button>
+            <button class="zone" data-zone="middle-left" aria-label="Middle left"></button>
+            <button class="zone" data-zone="middle-center" aria-label="Middle center"></button>
+            <button class="zone" data-zone="middle-right" aria-label="Middle right"></button>
+            <button class="zone" data-zone="bottom-left" aria-label="Bottom left"></button>
+            <button class="zone" data-zone="bottom-center" aria-label="Bottom center"></button>
+            <button class="zone" data-zone="bottom-right" aria-label="Bottom right"></button>
+          </div>
+          <div id="zoneLabel" class="zone-label" aria-live="polite">No zone selected</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Attributes</h2>
+        <div class="chips" id="attributes">
+          <!-- Excluding headers by request -->
+          <label class="chip"><input type="checkbox" value="off a throw-in" />Throw-in</label>
+          <label class="chip"><input type="checkbox" value="on a breakaway" />Breakaway</label>
+          <label class="chip"><input type="checkbox" value="on a volley" />Volley</label>
+          <label class="chip"><input type="checkbox" value="from a cross" />Cross</label>
+          <label class="chip"><input type="checkbox" value="from a through pass" />Through pass</label>
+          <label class="chip"><input type="checkbox" value="on a rebound" />Rebound</label>
+          <label class="chip"><input type="checkbox" value="from a free kick" />Free kick</label>
+          <label class="chip"><input type="checkbox" value="from a corner" />Corner</label>
+          <label class="chip"><input type="checkbox" value="from the penalty spot" />Penalty</label>
+          <label class="chip"><input type="checkbox" value="after dribbling past a defender" />Dribble past</label>
+          <label class="chip"><input type="checkbox" value="from long range" />Long shot</label>
+          <label class="chip"><input type="checkbox" value="a tap-in" />Tap-in</label>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="actions">
+          <button id="generate" class="primary">Generate Snippet</button>
+          <button id="copy" class="secondary" disabled>Copy</button>
+        </div>
+        <textarea id="output" rows="4" placeholder="Your snippet will appear here" readonly></textarea>
+      </section>
+    </main>
+
+    <footer class="app-footer">Fox Soccer Academy • Let’s go FSA! ⚽️</footer>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
+
