@@ -33,6 +33,12 @@ const zoneNice = {
 const scorerEl = document.getElementById("scorer");
 const assistEl = document.getElementById("assist");
 const minuteEl = document.getElementById("minute");
+const minuteBtn = document.getElementById("minuteBtn");
+const minuteModal = document.getElementById("minuteModal");
+const minuteClose = document.getElementById("minuteClose");
+const numpad = document.getElementById("numpad");
+const numpadDisplay = document.getElementById("numpadDisplay");
+const numpadError = document.getElementById("numpadError");
 const outputEl = document.getElementById("output");
 const generateBtn = document.getElementById("generate");
 const resetBtn = document.getElementById("reset");
@@ -64,12 +70,73 @@ function populatePlayers() {
   });
 }
 
-function populateMinutes() {
-  for (let i = 1; i <= 50; i++) {
-    const o = document.createElement("option");
-    o.value = String(i);
-    o.textContent = String(i);
-    minuteEl.appendChild(o);
+// Minute entry via numpad modal
+let numpadBuffer = ""; // current typed value
+
+function openMinuteModal() {
+  // seed buffer from current minute value
+  numpadBuffer = minuteEl.value || "";
+  renderNumpad();
+  minuteModal.hidden = false;
+  // Focus first key for accessibility
+  const firstKey = numpad.querySelector('button[data-key="1"]');
+  if (firstKey) firstKey.focus();
+}
+
+function closeMinuteModal() {
+  minuteModal.hidden = true;
+  minuteBtn.focus();
+}
+
+function clampAndValidate(valStr) {
+  // normalize leading zeros (e.g., "05" -> 5)
+  const n = valStr === "" ? NaN : parseInt(valStr, 10);
+  const valid = Number.isFinite(n) && n > 0 && n < 60;
+  return { n, valid };
+}
+
+function renderNumpad() {
+  const { n, valid } = clampAndValidate(numpadBuffer);
+  numpadDisplay.textContent = numpadBuffer === "" ? "--" : String(n);
+  if (numpadBuffer === "") {
+    numpadError.textContent = "";
+  } else if (!valid) {
+    numpadError.textContent = "Enter a value 1–59";
+  } else {
+    numpadError.textContent = "";
+  }
+  // Enable/disable confirm button based on validity
+  const confirmBtn = numpad.querySelector('button[data-action="confirm"]');
+  if (confirmBtn) confirmBtn.disabled = !valid;
+}
+
+function handleNumpadClick(e) {
+  const t = e.target;
+  if (!(t instanceof HTMLElement)) return;
+  const key = t.getAttribute("data-key");
+  const action = t.getAttribute("data-action");
+  if (key !== null) {
+    // Append digit, limit raw length to 2
+    if (numpadBuffer.length < 2) {
+      numpadBuffer += key;
+    } else {
+      // Allow replacing buffer if first digit is 0, or ignore
+      // Keep it simple: ignore when at 2 digits
+    }
+    renderNumpad();
+  } else if (action === "backspace") {
+    numpadBuffer = numpadBuffer.slice(0, -1);
+    renderNumpad();
+  } else if (action === "confirm") {
+    const { n, valid } = clampAndValidate(numpadBuffer);
+    if (valid) {
+      minuteEl.value = String(n);
+      minuteBtn.textContent = `Minute: ${n}′`;
+      persistState();
+      closeMinuteModal();
+    } else {
+      renderNumpad();
+    }
   }
 }
 
@@ -166,6 +233,12 @@ function buildNarrative(zoneKey, attrsStr) {
 }
 
 async function onGenerate() {
+  // Ensure minute is valid before generating
+  const m = parseInt(minuteEl.value, 10);
+  if (!Number.isFinite(m) || m <= 0 || m >= 60) {
+    openMinuteModal();
+    return;
+  }
   const snippet = buildSnippet();
   outputEl.value = snippet;
   persistState();
@@ -211,8 +284,14 @@ function restoreState() {
     if (s.scorer) scorerEl.value = s.scorer;
     if (typeof s.assist === 'string') assistEl.value = s.assist;
     if (typeof s.minute === 'string') minuteEl.value = s.minute;
-    // Clamp minute if old state had 0
-    if (minuteEl.value === '' || minuteEl.value === '0') minuteEl.value = '1';
+    // Clamp minute to valid range or clear
+    const m = parseInt(minuteEl.value, 10);
+    if (!Number.isFinite(m) || m <= 0 || m >= 60) {
+      minuteEl.value = '';
+      minuteBtn.textContent = 'Set minute…';
+    } else {
+      minuteBtn.textContent = `Minute: ${m}′`;
+    }
     if (s.zone) {
       selectedZone = s.zone;
       const btn = document.querySelector(`.goal .zone[data-zone="${selectedZone}"]`);
@@ -238,7 +317,8 @@ function onReset() {
   // Clear selections
   scorerEl.selectedIndex = 0;
   assistEl.selectedIndex = 0;
-  minuteEl.selectedIndex = 0;
+  minuteEl.value = '';
+  minuteBtn.textContent = 'Set minute…';
   document.querySelectorAll('#attributes input[type="checkbox"]').forEach((c) => (c.checked = false));
   document.querySelectorAll('.goal .zone').forEach((b) => b.classList.remove('selected'));
   selectedZone = null;
@@ -250,14 +330,20 @@ function onReset() {
 
 // Init
 populatePlayers();
-populateMinutes();
 setupGoalZones();
 restoreState();
 generateBtn.addEventListener("click", onGenerate);
 resetBtn.addEventListener("click", onReset);
 
+// Minute modal wiring
+minuteBtn.addEventListener('click', openMinuteModal);
+minuteClose.addEventListener('click', closeMinuteModal);
+minuteModal.addEventListener('click', (e) => {
+  if (e.target === minuteModal) closeMinuteModal();
+});
+numpad.addEventListener('click', handleNumpadClick);
+
 // Persist on change
 scorerEl.addEventListener('change', persistState);
 assistEl.addEventListener('change', persistState);
-minuteEl.addEventListener('change', persistState);
 document.getElementById('attributes').addEventListener('change', persistState);

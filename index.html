@@ -34,8 +34,9 @@
         </div>
 
         <div class="field">
-          <label for="minute">Minute</label>
-          <select id="minute" aria-label="Select minute of goal"></select>
+          <label for="minuteBtn">Minute</label>
+          <button id="minuteBtn" class="input-button" aria-haspopup="dialog" aria-controls="minuteModal">Set minute…</button>
+          <input type="hidden" id="minute" />
         </div>
       </section>
 
@@ -88,6 +89,31 @@
 
     <footer class="app-footer">Fox Soccer Academy • Let’s go FSA! ⚽️</footer>
 
+    <!-- Minute Numpad Modal -->
+    <div id="minuteModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="minuteModalTitle" hidden>
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="minuteModalTitle">Enter Minute of Goal</h3>
+          <button class="icon-btn" id="minuteClose" aria-label="Close">✕</button>
+        </div>
+        <div class="numpad-display" id="numpadDisplay">--</div>
+        <div class="numpad-grid" id="numpad">
+          <button data-key="1">1</button>
+          <button data-key="2">2</button>
+          <button data-key="3">3</button>
+          <button data-key="4">4</button>
+          <button data-key="5">5</button>
+          <button data-key="6">6</button>
+          <button data-key="7">7</button>
+          <button data-key="8">8</button>
+          <button data-key="9">9</button>
+          <button data-action="backspace" class="danger-text" aria-label="Backspace">⌫</button>
+          <button data-key="0">0</button>
+          <button data-action="confirm" class="success-text" aria-label="Confirm">✓</button>
+        </div>
+        <div id="numpadError" class="numpad-error" role="alert" aria-live="polite"></div>
+      </div>
+    </div>
     <script src="script.js"></script>
     <script>
       if ('serviceWorker' in navigator) {

@@ -101,8 +101,24 @@ button {
   border: none;
   cursor: pointer;
 }
+.input-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid #e1e8e3;
+  background: #fff;
+  color: var(--ink);
+  text-align: left;
+}
+.input-button:focus { outline: 3px solid rgba(0,115,255,0.25); }
+.icon-btn { background: transparent; padding: 6px 8px; border-radius: 8px; }
+.icon-btn:hover { background: rgba(0,0,0,0.06); }
 .primary {
   background: linear-gradient(180deg, var(--accent), #005ad6);
+  color: var(--white);
+}
+.success {
+  background: linear-gradient(180deg, var(--green-2), var(--green-1));
   color: var(--white);
 }
 .secondary {
@@ -222,6 +238,67 @@ textarea#output {
 .danger {
   background: linear-gradient(180deg, #ff7a59, #e24a2a);
   color: #fff;
+}
+.danger-text { color: #b00020; }
+.success-text { color: var(--green-2); }
+
+/* Modal & Numpad */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 50;
+}
+.modal[hidden] { display: none !important; }
+.modal-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  padding: 12px 12px 16px;
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.modal-header h3 { margin: 0; font-size: 18px; color: var(--ink-2); }
+
+.numpad-display {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  padding: 8px 12px;
+  background: #fff;
+  border: 2px solid #e1e8e3;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.numpad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.numpad-grid button {
+  padding: 16px 0;
+  font-size: 18px;
+  background: #fff;
+  border: 2px solid #e1e8e3;
+  border-radius: 12px;
+}
+.numpad-grid button.primary { color: #fff; border: none; }
+.numpad-error {
+  min-height: 18px;
+  color: #b00020;
+  font-size: 13px;
+  margin-top: 8px;
+  text-align: center;
 }
 
 @media (min-width: 720px) {
