@@ -363,10 +363,3 @@ if (window.PointerEvent) {
 scorerEl.addEventListener('change', persistState);
 assistEl.addEventListener('change', persistState);
 document.getElementById('attributes').addEventListener('change', persistState);
-
-// On iOS Safari, also block pinch-zoom gestures (keeps scrolling)
-try {
-  document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
-  document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive: false });
-  document.addEventListener('gestureend', (e) => e.preventDefault(), { passive: false });
-} catch (_) {}
