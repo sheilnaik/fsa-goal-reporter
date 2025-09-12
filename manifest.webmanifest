@@ -1,6 +1,6 @@
 {
   "name": "FSA Goal Reporter",
-  "short_name": "FSA Goals",
+  "short_name": "FSA",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#1b5e20",
@@ -10,4 +10,3 @@
     { "src": "icons/icon-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable any" }
   ]
 }
-

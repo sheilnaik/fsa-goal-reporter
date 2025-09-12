@@ -54,6 +54,11 @@ Then open `http://localhost:8000/`.
 Notes:
 - `manifest.webmanifest` and `sw.js` live at the site root and are referenced by `index.html`.
 - Icons are lightweight SVGs in `icons/` with a striped pitch background and centered soccer ball.
+- For iOS home screen, add a PNG touch icon at `icons/apple-touch-icon-180.png` (180×180). You can export it from `icons/icon-192.svg` using any image tool. The HTML already references this path.
+
+## App Name on Home Screen
+- The PWA `short_name` is set to `FSA` in `manifest.webmanifest`.
+- iOS uses `<meta name="apple-mobile-web-app-title" content="FSA">` from `index.html`.
 
 ## Files
 - `index.html` – App UI
@@ -65,4 +70,3 @@ Notes:
 
 ## Privacy
 This app works offline and does not send data anywhere. All data stays in your browser’s local storage.
-
