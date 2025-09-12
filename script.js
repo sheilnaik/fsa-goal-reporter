@@ -324,7 +324,6 @@ function onReset() {
   selectedZone = null;
   zoneLabel.textContent = 'No zone selected';
   outputEl.value = '';
-  copyBtn.disabled = true;
   try { localStorage.removeItem(STORAGE_KEY); } catch {}
 }
 
@@ -336,14 +335,38 @@ generateBtn.addEventListener("click", onGenerate);
 resetBtn.addEventListener("click", onReset);
 
 // Minute modal wiring
-minuteBtn.addEventListener('click', openMinuteModal);
+// Prefer Pointer Events on capable browsers to ensure reliable mobile taps.
+if (window.PointerEvent) {
+  minuteBtn.addEventListener('pointerup', (e) => {
+    // Only act on primary pointer release
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    openMinuteModal();
+  });
+} else {
+  // Fallback for older mobile browsers
+  minuteBtn.addEventListener('touchend', openMinuteModal, { passive: true });
+  minuteBtn.addEventListener('click', openMinuteModal);
+}
 minuteClose.addEventListener('click', closeMinuteModal);
 minuteModal.addEventListener('click', (e) => {
   if (e.target === minuteModal) closeMinuteModal();
 });
-numpad.addEventListener('click', handleNumpadClick);
+// Use pointer events for numpad too, with safe fallback
+if (window.PointerEvent) {
+  numpad.addEventListener('pointerup', handleNumpadClick);
+} else {
+  numpad.addEventListener('touchend', handleNumpadClick, { passive: true });
+  numpad.addEventListener('click', handleNumpadClick);
+}
 
 // Persist on change
 scorerEl.addEventListener('change', persistState);
 assistEl.addEventListener('change', persistState);
 document.getElementById('attributes').addEventListener('change', persistState);
+
+// On iOS Safari, also block pinch-zoom gestures (keeps scrolling)
+try {
+  document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
+  document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive: false });
+  document.addEventListener('gestureend', (e) => e.preventDefault(), { passive: false });
+} catch (_) {}
