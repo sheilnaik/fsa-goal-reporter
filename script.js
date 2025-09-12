@@ -13,6 +13,9 @@ const PLAYERS = [
   "Caden",
 ];
 
+// Ensure dropdowns are alphabetical
+const SORTED_PLAYERS = [...PLAYERS].sort((a, b) => a.localeCompare(b));
+
 const zoneNice = {
   "top-left": "top left",
   "top-center": "top center",
@@ -40,7 +43,7 @@ const STORAGE_KEY = "fsa-goal-state-v1";
 
 function populatePlayers() {
   // Scorer options
-  PLAYERS.forEach((p) => {
+  SORTED_PLAYERS.forEach((p) => {
     const o = document.createElement("option");
     o.value = p;
     o.textContent = p;
@@ -53,7 +56,7 @@ function populatePlayers() {
   none.textContent = "None";
   assistEl.appendChild(none);
 
-  PLAYERS.forEach((p) => {
+  SORTED_PLAYERS.forEach((p) => {
     const o = document.createElement("option");
     o.value = p;
     o.textContent = p;
