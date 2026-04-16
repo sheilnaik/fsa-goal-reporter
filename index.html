@@ -16,11 +16,27 @@
   </head>
   <body>
     <header class="app-header">
-      <div class="badge">FSA</div>
-      <h1>Goal Reporter</h1>
+      <div class="brand">
+        <div class="badge">FSA</div>
+        <div>
+          <p class="eyebrow">Matchday Studio</p>
+          <h1>Goal Reporter</h1>
+        </div>
+      </div>
+      <div class="header-ball" aria-hidden="true">⚽</div>
     </header>
 
     <main class="container">
+      <section class="scoreboard card">
+        <p class="scoreboard-label">Fox Soccer Academy</p>
+        <div class="score-line">
+          <span>FSA</span>
+          <strong>⚽ Goal Update ⚽</strong>
+          <span>Opp</span>
+        </div>
+        <p class="scoreboard-sub">Build polished, match-ready goal announcements in seconds.</p>
+      </section>
+
       <section class="card">
         <h2>Goal Details</h2>
         <div class="field">
@@ -61,6 +77,7 @@
 
       <section class="card">
         <h2>Goal Attributes</h2>
+        <p class="section-subtitle">Choose one or more play traits to enrich your description.</p>
         <div class="chips" id="attributes">
           <!-- Excluding headers by request -->
           <label class="chip"><input type="checkbox" value="on a breakaway" />Breakaway</label>

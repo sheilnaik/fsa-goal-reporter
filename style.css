@@ -1,31 +1,40 @@
 :root {
-  --green-1: #1b5e20;
-  --green-2: #2e7d32;
-  --green-3: #388e3c;
+  --green-1: #0f4a2c;
+  --green-2: #1b6a3d;
+  --green-3: #2d8950;
   --white: #ffffff;
-  --ink: #0d1912;
-  --ink-2: #30443a;
-  --accent: #0073ff;
-  --accent-2: #e86f00;
-  --card: rgba(255, 255, 255, 0.9);
-  --shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --ink: #0e2116;
+  --ink-2: #2d4a3a;
+  --accent: #116dff;
+  --card: rgba(255, 255, 255, 0.96);
+  --shadow: 0 16px 38px rgba(3, 38, 21, 0.2);
+  --line: rgba(255, 255, 255, 0.18);
 }
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-/* Prevent double-tap zoom while preserving scroll */
 html, body, button, .input-button, .goal .zone { touch-action: manipulation; }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--ink);
   background:
+    radial-gradient(circle at 18% 20%, rgba(255,255,255,0.2), transparent 34%),
+    radial-gradient(circle at 85% 10%, rgba(255,255,255,0.18), transparent 28%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 9.5vh,
+      var(--line) 9.5vh,
+      var(--line) 10vh
+    ),
     repeating-linear-gradient(
       90deg,
       var(--green-2) 0,
-      var(--green-2) 12vw,
-      var(--green-3) 12vw,
-      var(--green-3) 24vw
+      var(--green-2) 10vw,
+      var(--green-3) 10vw,
+      var(--green-3) 20vw
     );
   background-attachment: fixed;
 }
@@ -35,40 +44,97 @@ body {
   top: 0;
   z-index: 10;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background: linear-gradient(160deg, rgba(4,37,22,0.9), rgba(6,48,30,0.82));
+  color: var(--white);
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+.brand {
+  display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
-  background: linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15)), var(--green-1);
-  color: var(--white);
-  border-bottom: 3px solid rgba(255,255,255,0.2);
 }
 .app-header .badge {
-  background: var(--accent);
+  background: linear-gradient(140deg, #0e7eff, #00a8ff);
   color: var(--white);
   font-weight: 800;
   letter-spacing: 1px;
-  padding: 6px 10px;
-  border-radius: 8px;
+  padding: 8px 11px;
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(7, 113, 214, 0.4);
 }
-.app-header h1 { font-size: 20px; margin: 0; }
+.eyebrow {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.1px;
+  color: rgba(255,255,255,0.78);
+}
+.app-header h1 { font-size: 20px; margin: 2px 0 0; }
+.header-ball {
+  font-size: 26px;
+  filter: drop-shadow(0 6px 9px rgba(0,0,0,0.35));
+}
 
 .container {
   padding: 16px;
   display: grid;
   gap: 16px;
+  max-width: 980px;
+  margin: 0 auto;
 }
 
 .card {
   background: var(--card);
-  border-radius: 14px;
-  padding: 14px;
+  border-radius: 18px;
+  padding: 16px;
   box-shadow: var(--shadow);
   backdrop-filter: blur(6px);
+  border: 1px solid rgba(14, 64, 39, 0.08);
 }
 .card h2 {
   margin: 0 0 12px;
   font-size: 18px;
   color: var(--ink-2);
+}
+.section-subtitle {
+  margin: -4px 0 12px;
+  color: #4a6758;
+  font-size: 13px;
+}
+
+.scoreboard {
+  background: linear-gradient(145deg, rgba(10,72,44,0.94), rgba(23,113,66,0.92));
+  color: #eaf9f0;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.scoreboard-label {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+  opacity: 0.88;
+}
+.score-line {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-weight: 700;
+}
+.score-line strong {
+  font-size: 18px;
+  text-align: center;
+}
+.scoreboard-sub {
+  margin: 10px 0 2px;
+  font-size: 13px;
+  opacity: 0.95;
 }
 
 .field {
@@ -80,14 +146,14 @@ body {
 .field .hint { font-size: 12px; color: #555; }
 
 select, textarea, button {
-  font-size: 16px; /* Prevent iOS zoom */
+  font-size: 16px;
 }
 
 select, textarea {
   width: 100%;
   padding: 12px;
-  border-radius: 10px;
-  border: 2px solid #e1e8e3;
+  border-radius: 12px;
+  border: 2px solid #d8e7dd;
   background: #fff;
 }
 select:focus, textarea:focus { outline: 3px solid rgba(0,115,255,0.25); }
@@ -102,12 +168,15 @@ button {
   border-radius: 12px;
   border: none;
   cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
 }
+button:hover { transform: translateY(-1px); }
+
 .input-button {
   width: 100%;
   padding: 12px;
   border-radius: 10px;
-  border: 2px solid #e1e8e3;
+  border: 2px solid #d8e7dd;
   background: #fff;
   color: var(--ink);
   text-align: left;
@@ -116,8 +185,9 @@ button {
 .icon-btn { background: transparent; padding: 6px 8px; border-radius: 8px; }
 .icon-btn:hover { background: rgba(0,0,0,0.06); }
 .primary {
-  background: linear-gradient(180deg, var(--accent), #005ad6);
+  background: linear-gradient(180deg, #2285ff, #0c5fd7);
   color: var(--white);
+  box-shadow: 0 8px 16px rgba(17, 109, 255, 0.3);
 }
 .success {
   background: linear-gradient(180deg, var(--green-2), var(--green-1));
@@ -135,7 +205,6 @@ textarea#output {
   resize: vertical;
 }
 
-/* Goal diagram */
 .goal-wrapper { display: grid; gap: 8px; }
 .goal {
   position: relative;
@@ -143,12 +212,12 @@ textarea#output {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  border: 4px solid var(--white);
+  border: 4px solid #f5fffa;
   border-radius: 10px;
-  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.1);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.08), 0 12px 22px rgba(5, 51, 31, 0.2);
+  background: linear-gradient(180deg, rgba(37,145,79,0.45), rgba(14,84,48,0.45));
 }
 
-/* Minimal gridlines for 9 zones (2 vertical, 2 horizontal) */
 .goal::after {
   content: "";
   position: absolute;
@@ -190,9 +259,11 @@ textarea#output {
   outline: none;
 }
 .goal .zone:focus-visible { outline: 3px solid rgba(0,115,255,0.4); }
-.goal .zone.selected { background: rgba(0,115,255,0.2); }
+.goal .zone.selected {
+  background: rgba(17,109,255,0.25);
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,0.45);
+}
 
-/* Position the 9 zones */
 .goal .zone[data-zone="top-left"] { left: 0; top: 0; }
 .goal .zone[data-zone="top-center"] { left: 33.333%; top: 0; }
 .goal .zone[data-zone="top-right"] { left: 66.666%; top: 0; }
@@ -207,16 +278,17 @@ textarea#output {
   text-align: center;
   color: var(--ink-2);
   font-size: 14px;
+  font-weight: 600;
 }
 
 .app-footer {
   padding: 28px 16px 40px;
   text-align: center;
-  color: #eaf3ec;
+  color: #ecfff4;
   font-weight: 600;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.26);
 }
 
-/* Goal Attributes (chips) */
 .chips {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -228,13 +300,18 @@ textarea#output {
   gap: 10px;
   padding: 10px 12px;
   background: #fff;
-  border: 2px solid #e1e8e3;
+  border: 2px solid #deece3;
   border-radius: 999px;
   user-select: none;
+}
+.chip:has(input:checked) {
+  border-color: #89c6a2;
+  background: #ebf9f0;
 }
 .chip input {
   width: 22px;
   height: 22px;
+  accent-color: var(--green-2);
 }
 
 .danger {
@@ -244,7 +321,6 @@ textarea#output {
 .danger-text { color: #b00020; }
 .success-text { color: var(--green-2); }
 
-/* Modal & Numpad */
 .modal {
   position: fixed;
   inset: 0;
@@ -278,7 +354,7 @@ textarea#output {
   font-weight: 700;
   padding: 8px 12px;
   background: #fff;
-  border: 2px solid #e1e8e3;
+  border: 2px solid #d8e7dd;
   border-radius: 10px;
   margin-bottom: 12px;
 }
@@ -291,7 +367,7 @@ textarea#output {
   padding: 16px 0;
   font-size: 18px;
   background: #fff;
-  border: 2px solid #e1e8e3;
+  border: 2px solid #d8e7dd;
   border-radius: 12px;
 }
 .numpad-grid button.primary { color: #fff; border: none; }
@@ -305,5 +381,6 @@ textarea#output {
 
 @media (min-width: 720px) {
   .container { grid-template-columns: 1fr 1fr; }
+  .scoreboard,
   .container .card:last-child { grid-column: 1 / -1; }
 }
