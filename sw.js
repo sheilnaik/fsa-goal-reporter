@@ -1,5 +1,5 @@
 // Simple app-shell service worker for GitHub Pages
-const CACHE_NAME = 'fsa-goal-reporter-v1';
+const CACHE_NAME = 'fsa-goal-reporter-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -47,4 +47,3 @@ self.addEventListener('fetch', (event) => {
     }))
   );
 });
-
