@@ -1,16 +1,18 @@
 const PLAYERS = [
   "Ben",
-  "Everett",
-  "Liam",
   "Bobby",
-  "Henry",
+  "Caden",
+  "Daniel",
+  "Diagoras",
+  "Everett",
+  "Gildas",
   "Giovanni",
+  "Harrison",
+  "Liam",
   "Mikey",
   "Miguel",
-  "Diagoras",
-  "Andy",
-  "Peter",
-  "Caden",
+  "Ryder",
+  "Thut",
 ];
 
 // Ensure dropdowns are alphabetical
